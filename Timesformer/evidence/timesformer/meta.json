@@ -1,0 +1,30 @@
+{
+  "timestamp": "2026-01-04T21:29:23",
+  "model": "facebook/timesformer-base-finetuned-k400",
+  "video": "/home/diego/Escritorio/Pruebas/Codificadores/video_prueba.mp4",
+  "num_frames": 8,
+  "device": "cpu",
+  "torch_version": "2.9.1+cu128",
+  "total_frames": 905,
+  "sampled_indices": [
+    0,
+    129,
+    258,
+    387,
+    516,
+    645,
+    774,
+    904
+  ],
+  "embedding_shape": [
+    1,
+    768
+  ],
+  "embedding_preview": [
+    -0.8930177092552185,
+    0.2146882712841034,
+    0.31781473755836487,
+    -1.1043930053710938,
+    -0.4480910301208496
+  ]
+}
