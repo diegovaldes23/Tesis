@@ -1,0 +1,11 @@
+__pycache__/
+/outputs
+/checkpoints
+/datasets
+/ffmpeg
+/demo/assets/*.json
+/demo/assets/cache
+/demo/rendering/ChatTTS
+*.wav
+/demo/rendering/*.mp4
+.DS_Store
