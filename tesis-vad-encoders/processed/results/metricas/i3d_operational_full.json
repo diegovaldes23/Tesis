@@ -1,0 +1,29 @@
+{
+  "BASELINE": {
+    "ms_clip": 63.27,
+    "ms_frame": 1.98,
+    "fps": 505.8,
+    "viable": true,
+    "frames_clip": 32,
+    "n_mediciones": 100,
+    "gflops": 55.8
+  },
+  "LORA+MLP": {
+    "ms_clip": 43.06,
+    "ms_frame": 1.35,
+    "fps": 743.2,
+    "viable": true,
+    "frames_clip": 32,
+    "n_mediciones": 100,
+    "gflops": 55.8
+  },
+  "SOLO_LORA": {
+    "ms_clip": 43.06,
+    "ms_frame": 1.35,
+    "fps": 743.2,
+    "viable": true,
+    "frames_clip": 32,
+    "n_mediciones": 100,
+    "gflops": 55.8
+  }
+}

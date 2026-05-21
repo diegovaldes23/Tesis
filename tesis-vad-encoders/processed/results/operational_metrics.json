@@ -1,0 +1,8 @@
+{
+  "latencia_clip_ms": 18.64,
+  "latencia_frame_ms": 0.58,
+  "fps": 1716.5,
+  "flops_gflops": 108.9,
+  "viable_realtime": true,
+  "n_clips_medidos": 100
+}

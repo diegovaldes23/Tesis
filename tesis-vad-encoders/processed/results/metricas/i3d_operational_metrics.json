@@ -1,0 +1,8 @@
+{
+  "frames_por_clip": 32,
+  "latencia_clip_ms": 25.34,
+  "latencia_frame_ms": 0.79,
+  "fps": 1262.8,
+  "viable_realtime": true,
+  "n_clips_medidos": 100
+}

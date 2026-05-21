@@ -1,0 +1,111 @@
+{
+  "codificador": "X-CLIP",
+  "checkpoint": "microsoft/xclip-base-patch32",
+  "frames_internos": 8,
+  "frames_clip_orig": 32,
+  "config_mlp": {
+    "arch": "fc",
+    "hidden_dim": 128,
+    "dropout": 0.3,
+    "lr": 0.001,
+    "lr_e2e": 0.0001,
+    "epochs": 50,
+    "patience": 8,
+    "batch_size": 64,
+    "batch_vid": 8,
+    "seed": 42
+  },
+  "config_lora": {
+    "rank": 4,
+    "alpha": 8,
+    "lora_dropout": 0.1,
+    "target_mods": [
+      "q_proj",
+      "v_proj"
+    ]
+  },
+  "BASELINE": {
+    "test_metrics": {
+      "AUC": 0.8557620854217063,
+      "Accuracy": 0.7687014078587938,
+      "Precision": 0.7758689973879848,
+      "Recall": 0.7804951995957554,
+      "F1": 0.7781752229331452,
+      "FAR": 0.24406520074390112
+    },
+    "best_val_auc": 0.9056069879304021,
+    "epochs_run": 9,
+    "operational": {
+      "latencia_ms_clip": 37.89,
+      "latencia_ms_frame": 1.184,
+      "clips_por_segundo": 26.4,
+      "fps_frames_reales": 844.6,
+      "frames_internos": 8,
+      "frames_clip_real": 32,
+      "umbral_clips_s": 1.88,
+      "gflops_pipeline": 35.86,
+      "viable_realtime": true
+    }
+  },
+  "LORA+MLP": {
+    "test_metrics": {
+      "AUC": 0.9099435219570284,
+      "Accuracy": 0.8384114309728935,
+      "Precision": 0.8592350647982299,
+      "Recall": 0.8241536129358262,
+      "F1": 0.8413287939750336,
+      "FAR": 0.14615468767093315
+    },
+    "best_val_auc": 0.9589634490393837,
+    "epochs_run": 16,
+    "lora_params": 417792,
+    "lora_pct": 0.212,
+    "operational": {
+      "latencia_ms_clip": 42.81,
+      "latencia_ms_frame": 1.338,
+      "clips_por_segundo": 23.4,
+      "fps_frames_reales": 747.4,
+      "frames_internos": 8,
+      "frames_clip_real": 32,
+      "umbral_clips_s": 1.88,
+      "gflops_pipeline": 35.92,
+      "viable_realtime": true
+    }
+  },
+  "SOLO_LORA": {
+    "test_metrics": {
+      "AUC": 0.9192134743324766,
+      "Accuracy": 0.8430342508930447,
+      "Precision": 0.8855643630679915,
+      "Recall": 0.8016169782718545,
+      "F1": 0.841502227880331,
+      "FAR": 0.11213215184334317
+    },
+    "best_val_auc": 0.965630742188978,
+    "epochs_run": 14,
+    "lora_params": 417792,
+    "lora_pct": 0.212,
+    "operational": {
+      "latencia_ms_clip": 42.23,
+      "latencia_ms_frame": 1.32,
+      "clips_por_segundo": 23.7,
+      "fps_frames_reales": 757.8,
+      "frames_internos": 8,
+      "frames_clip_real": 32,
+      "umbral_clips_s": 1.88,
+      "gflops_pipeline": 35.92,
+      "viable_realtime": true
+    }
+  },
+  "operational_metrics": {
+    "latencia_ms_clip": 42.81,
+    "latencia_ms_frame": 1.338,
+    "clips_por_segundo": 23.4,
+    "fps_frames_reales": 747.4,
+    "frames_internos": 8,
+    "frames_clip_real": 32,
+    "umbral_clips_s": 1.88,
+    "gflops_pipeline": 35.92,
+    "viable_realtime": true
+  }
+}

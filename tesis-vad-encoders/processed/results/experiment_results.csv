@@ -1,0 +1,4 @@
+Modelo,Config,AUC,F1,Precision,Recall,FAR,Accuracy
+I3D,baseline,0.8657,0.7667,0.8287,0.7133,0.1596,0.7743
+I3D,lora+mlp,0.8711,0.736,0.8229,0.6658,0.1551,0.7518
+I3D,lora_only,0.8657,0.7667,0.8287,0.7133,0.1596,0.7743

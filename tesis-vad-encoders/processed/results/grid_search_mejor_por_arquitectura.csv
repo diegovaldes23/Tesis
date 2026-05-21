@@ -1,0 +1,5 @@
+arquitectura,hidden_dim,dropout,lr,n_params,val_auc,epochs_run
+attention,32,0.5,0.001,2132097,0.8628,6
+fc,128,0.3,0.001,131585,0.8764,5
+linear,-,-,0.001,1025,0.8446,9
+residual,32,0.3,0.001,33922,0.8696,11

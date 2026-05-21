@@ -1,0 +1,102 @@
+{
+  "codificador": "TimeSformer",
+  "checkpoint": "facebook/timesformer-base-finetuned-k400",
+  "config_mlp": {
+    "arch": "fc",
+    "hidden_dim": 128,
+    "dropout": 0.3,
+    "lr": 0.001,
+    "lr_e2e": 0.0001,
+    "epochs": 50,
+    "patience": 8,
+    "batch_size": 64,
+    "batch_vid": 8,
+    "seed": 42
+  },
+  "config_lora": {
+    "rank": 4,
+    "alpha": 8,
+    "lora_dropout": 0.1,
+    "target_mods": [
+      "qkv"
+    ]
+  },
+  "BASELINE": {
+    "test_metrics": {
+      "AUC": 0.9050263960182728,
+      "Accuracy": 0.8307942845135533,
+      "Precision": 0.8321720087597053,
+      "Recall": 0.8448711470439616,
+      "F1": 0.838473496815606,
+      "FAR": 0.1844437151296357
+    },
+    "best_val_auc": 0.9557485480538452,
+    "epochs_run": 10,
+    "operational": {
+      "latencia_ms_clip": 102.28,
+      "latencia_ms_frame": 3.196,
+      "clips_por_segundo": 9.8,
+      "fps_frames_reales": 312.9,
+      "frames_internos": 8,
+      "frames_clip_real": 32,
+      "umbral_clips_s": 1.88,
+      "gflops_pipeline": 196.05,
+      "viable_realtime": true
+    }
+  },
+  "LORA+MLP": {
+    "test_metrics": {
+      "AUC": 0.8930050399559669,
+      "Accuracy": 0.8342613994536667,
+      "Precision": 0.8354568982679673,
+      "Recall": 0.8482061647296615,
+      "F1": 0.8417832606188256,
+      "FAR": 0.1808336068263866
+    },
+    "best_val_auc": 0.9582420152214788,
+    "epochs_run": 25,
+    "lora_params": 294912,
+    "lora_pct": 0.243,
+    "operational": {
+      "latencia_ms_clip": 137.66,
+      "latencia_ms_frame": 4.302,
+      "clips_por_segundo": 7.3,
+      "fps_frames_reales": 232.5,
+      "frames_internos": 8,
+      "frames_clip_real": 32,
+      "umbral_clips_s": 1.88,
+      "gflops_pipeline": 196.52,
+      "viable_realtime": true
+    }
+  },
+  "SOLO_LORA": {
+    "test_metrics": {
+      "AUC": 0.940504451095987,
+      "Accuracy": 0.8663059466274428,
+      "Precision": 0.8740838762214984,
+      "Recall": 0.8678120262758969,
+      "F1": 0.8709366600740402,
+      "FAR": 0.13532436276118587
+    },
+    "best_val_auc": 0.9630486746390389,
+    "epochs_run": 21,
+    "lora_params": 294912,
+    "lora_pct": 0.243,
+    "operational": {
+      "latencia_ms_clip": 160.71,
+      "latencia_ms_frame": 5.022,
+      "clips_por_segundo": 6.2,
+      "fps_frames_reales": 199.1,
+      "frames_internos": 8,
+      "frames_clip_real": 32,
+      "umbral_clips_s": 1.88,
+      "gflops_pipeline": 196.52,
+      "viable_realtime": true
+    }
+  },
+  "operational_metrics": {
+    "latencia_ms_clip": 51.85,
+    "fps": 19.3,
+    "viable_realtime": false
+  }
+}

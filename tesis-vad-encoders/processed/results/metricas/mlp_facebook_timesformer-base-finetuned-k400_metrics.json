@@ -1,0 +1,42 @@
+{
+  "manifest": "processed/manifest_timesformer_cls.json",
+  "model": "facebook/timesformer-base-finetuned-k400",
+  "T": 8,
+  "img_size": 224,
+  "D": 768,
+  "cfg": {
+    "batch_size": 512,
+    "num_workers": 2,
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "epochs": 20,
+    "patience": 4,
+    "threshold": 0.5
+  },
+  "val": {
+    "auc": 0.9330109249915781,
+    "ap": 0.9282438216699962,
+    "f1": 0.8516642082985956,
+    "recall": 0.8843899840170485,
+    "precision": 0.821273964131107,
+    "accuracy": 0.8490110320517005,
+    "far": 0.18499551913967482,
+    "tp": 6640,
+    "fp": 1445,
+    "tn": 6366,
+    "fn": 868
+  },
+  "test": {
+    "auc": 0.8958315385830704,
+    "ap": 0.8789709757784439,
+    "f1": 0.8299343044844331,
+    "recall": 0.8835908040384381,
+    "precision": 0.7824213700990952,
+    "accuracy": 0.8276101685100469,
+    "far": 0.22325375773651635,
+    "tp": 7264,
+    "fp": 2020,
+    "tn": 7028,
+    "fn": 957
+  }
+}

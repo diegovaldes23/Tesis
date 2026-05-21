@@ -1,0 +1,23 @@
+{
+  "modelo": "I3D",
+  "config": "lora_only",
+  "descripcion": "MLP congelado (baseline) + embeddings LoRA",
+  "lora_config": {
+    "rank": 4,
+    "alpha": 8,
+    "dropout": 0.1,
+    "targets": [
+      "Mixed_5b",
+      "Mixed_5c"
+    ]
+  },
+  "metricas_test": {
+    "AUC": 0.8657133132769919,
+    "F1": 0.7666739083206604,
+    "Precision": 0.8286955500763179,
+    "Recall": 0.7132895401718039,
+    "Accuracy": 0.7743223366253414,
+    "FAR": 0.15961054589213433
+  },
+  "historia": {}
+}
