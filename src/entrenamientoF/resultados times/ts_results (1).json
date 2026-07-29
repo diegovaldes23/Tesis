@@ -1,0 +1,69 @@
+{
+  "codificador": "TimeSformer",
+  "checkpoint": "facebook/timesformer-base-finetuned-k400",
+  "config_mlp": {
+    "arch": "fc",
+    "hidden_dim": 128,
+    "dropout": 0.3,
+    "lr": 0.001,
+    "lr_e2e": 0.0001,
+    "epochs": 50,
+    "patience": 8,
+    "batch_size": 64,
+    "batch_vid": 8,
+    "seed": 42
+  },
+  "config_lora": {
+    "rank": 16,
+    "alpha": 16,
+    "lora_dropout": 0.24,
+    "target_mods": [
+      "qkv"
+    ]
+  },
+  "BASELINE": {
+    "test_metrics": {
+      "AUC": 0.9050263960182728,
+      "Accuracy": 0.8307942845135533,
+      "Precision": 0.8321720087597053,
+      "Recall": 0.8448711470439616,
+      "F1": 0.838473496815606,
+      "FAR": 0.1844437151296357
+    },
+    "best_val_auc": 0.9557485480538452,
+    "epochs_run": 10
+  },
+  "LORA+MLP": {
+    "test_metrics": {
+      "AUC": 0.9153718242398483,
+      "Accuracy": 0.8415108216011767,
+      "Precision": 0.8491370558375635,
+      "Recall": 0.8452753916119252,
+      "F1": 0.8472018232463915,
+      "FAR": 0.16256427086751996
+    },
+    "best_val_auc": 0.9359776002194472,
+    "epochs_run": 15,
+    "lora_params": 1179648,
+    "lora_pct": 0.963
+  },
+  "SOLO_LORA": {
+    "test_metrics": {
+      "AUC": 0.9412608397361664,
+      "Accuracy": 0.8744484135322547,
+      "Precision": 0.8916605782277424,
+      "Recall": 0.8633653360282971,
+      "F1": 0.8772848634216471,
+      "FAR": 0.1135543157203807
+    },
+    "best_val_auc": 0.9572669380694895,
+    "epochs_run": 12,
+    "lora_params": 1179648,
+    "lora_pct": 0.963
+  },
+  "operational_metrics": {
+    "latencia_ms_clip": 53.49,
+    "fps": 18.7,
+    "viable_realtime": false
+  }
+}
