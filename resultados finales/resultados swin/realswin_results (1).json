@@ -1,0 +1,74 @@
+{
+  "codificador": "VideoSwin3D (torchvision)",
+  "checkpoint": "Swin3D_B_Weights.KINETICS400_IMAGENET22K_V1",
+  "frames_clip": 32,
+  "emb_dim": 1024,
+  "config_mlp": {
+    "arch": "fc",
+    "hidden_dim": 128,
+    "dropout": 0.3,
+    "lr": 0.001,
+    "lr_e2e": 0.0001,
+    "epochs": 50,
+    "patience": 8,
+    "batch_size": 64,
+    "batch_vid": 4,
+    "seed": 42
+  },
+  "config_lora": {
+    "rank": 16,
+    "alpha": 16,
+    "lora_dropout": 0.24,
+    "target_mods": [
+      "0",
+      "3"
+    ]
+  },
+  "BASELINE": {
+    "test_metrics": {
+      "AUC": 0.9185104520780746,
+      "Accuracy": 0.8456608531204034,
+      "Precision": 0.8679784195493494,
+      "Recall": 0.8292066700353714,
+      "F1": 0.8481496795534422,
+      "FAR": 0.13652773219560224
+    },
+    "best_val_auc": 0.9440273420728387,
+    "epochs_run": 9
+  },
+  "LORA+MLP": {
+    "test_metrics": {
+      "AUC": 0.9294756578468405,
+      "Accuracy": 0.8595818449254045,
+      "Precision": 0.8647474747474747,
+      "Recall": 0.8651844365841334,
+      "F1": 0.8649659004799192,
+      "FAR": 0.1464828793348649
+    },
+    "best_val_auc": 0.9523814405049589,
+    "epochs_run": 9,
+    "lora_params": 1925120,
+    "lora_pct": 5.718
+  },
+  "SOLO_LORA": {
+    "test_metrics": {
+      "AUC": 0.9249472209540289,
+      "Accuracy": 0.8460811094767808,
+      "Precision": 0.8036446072020228,
+      "Recall": 0.9314805457301667,
+      "F1": 0.8628533982400299,
+      "FAR": 0.24636254239142324
+    },
+    "best_val_auc": 0.9492263981124907,
+    "epochs_run": 9,
+    "lora_params": 1925120,
+    "lora_pct": 5.718
+  },
+  "operational_metrics": {
+    "latencia_ms_clip": 148.34,
+    "ms_frame": 4.64,
+    "fps": 215.7,
+    "viable_realtime": true,
+    "frames_por_clip": 32
+  }
+}

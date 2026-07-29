@@ -1,0 +1,76 @@
+{
+  "codificador": "X-CLIP",
+  "checkpoint": "microsoft/xclip-base-patch32",
+  "frames_internos": 8,
+  "frames_clip_orig": 32,
+  "config_mlp": {
+    "arch": "fc",
+    "hidden_dim": 128,
+    "dropout": 0.3,
+    "lr": 0.001,
+    "lr_e2e": 0.0001,
+    "epochs": 50,
+    "patience": 8,
+    "batch_size": 64,
+    "batch_vid": 8,
+    "seed": 42
+  },
+  "config_lora": {
+    "rank": 16,
+    "alpha": 16,
+    "lora_dropout": 0.24,
+    "target_mods": [
+      "q_proj",
+      "v_proj"
+    ]
+  },
+  "BASELINE": {
+    "test_metrics": {
+      "AUC": 0.8557620854217063,
+      "Accuracy": 0.7687014078587938,
+      "Precision": 0.7758689973879848,
+      "Recall": 0.7804951995957554,
+      "F1": 0.7781752229331452,
+      "FAR": 0.24406520074390112
+    },
+    "best_val_auc": 0.9056069879304021,
+    "epochs_run": 9
+  },
+  "LORA+MLP": {
+    "test_metrics": {
+      "AUC": 0.9242358183970749,
+      "Accuracy": 0.8232296700987602,
+      "Precision": 0.8279429489754921,
+      "Recall": 0.8330469934310257,
+      "F1": 0.8304871291118835,
+      "FAR": 0.18739744010502132
+    },
+    "best_val_auc": 0.9712318953973657,
+    "epochs_run": 15,
+    "lora_params": 1671168,
+    "lora_pct": 0.843
+  },
+  "SOLO_LORA": {
+    "test_metrics": {
+      "AUC": 0.917806329770765,
+      "Accuracy": 0.8220739651187224,
+      "Precision": 0.8058270676691729,
+      "Recall": 0.8664982314300151,
+      "F1": 0.8350620891161432,
+      "FAR": 0.22601465922765562
+    },
+    "best_val_auc": 0.981973793410332,
+    "epochs_run": 13,
+    "lora_params": 1671168,
+    "lora_pct": 0.843
+  },
+  "operational_metrics": {
+    "latencia_ms_clip": 19.75,
+    "latencia_ms_frame_real": 0.62,
+    "fps_clips": 50.63,
+    "fps_frames_reales": 1620.1,
+    "viable_realtime": true,
+    "frames_internos_modelo": 8,
+    "frames_clip_original": 32
+  }
+}
