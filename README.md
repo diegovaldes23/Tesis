@@ -1,10 +1,10 @@
 # Evaluación de Codificadores de Video para la Detección de Anomalías en Tiempo Real
 
-**Tesis para optar al título de Ingeniero Civil en Informática**  
-Universidad de Santiago de Chile — Facultad de Ingeniería  
-Departamento de Ingeniería Informática  
+**Tesis para optar al título de Ingeniero Civil en Informática**
+Universidad de Santiago de Chile — Facultad de Ingeniería
+Departamento de Ingeniería Informática
 
-**Autor:** Diego Valdés  
+**Autor:** Diego Valdés
 **Año:** 2025
 
 ---
@@ -37,28 +37,33 @@ tesis-vad-encoders/
 ├── requirements.txt
 ├── .gitignore
 │
-├── src/
-│   ├── entrenamiento/
-│   │   ├── train_i3d.py              # I3D: grid search + calibración LoRA + 3 configs
-│   │   ├── train_timesformer.py      # TimeSformer: 3 configuraciones
-│   │   ├── train_xclip.py            # X-CLIP: 3 configuraciones
-│   │   └── train_videoswin.py        # Video Swin: 3 configuraciones
-│   │
-│   └── evaluacion/
-│       ├── medir_operacional_i3d.py      # FPS, ms/clip, GFLOPs — I3D
-│       ├── medir_operacional_ts.py       # FPS, ms/clip, GFLOPs — TimeSformer
-│       ├── medir_operacional_xclip.py    # FPS, ms/clip, GFLOPs — X-CLIP
-│       └── medir_operacional_swin.py     # FPS, ms/clip, GFLOPs — Video Swin
-│
-├── processed/                        # Ignorado por git (ver .gitignore)
-│   ├── results/                      # Salidas I3D (.pth, .json, figuras)
-│   ├── ts_results/                   # Salidas TimeSformer
-│   ├── xclip_results/                # Salidas X-CLIP
-│   └── realswin_results/             # Salidas Video Swin
-│
-└── notebooks/
-    └── analisis_comparativo.ipynb    # Pareto, scoring compuesto, figuras
+└── src/
+    ├── Preprocesamiento/
+    │   ├── eda.py                          # Análisis exploratorio sobre la población completa
+    │   └── preprocess.py                   # Muestreo balanceado y generación de index_clips.csv
+    │
+    ├── entrenamientoF/                     # Scripts de entrenamiento final + resultados por codificador
+    │   ├── i3d_final_completo.py
+    │   ├── timesformer_final_r16a16d024 (1).py
+    │   ├── xclip_final_r16a16d024.py
+    │   ├── swin_final_r16a16d024 (1).py
+    │   ├── i3d_02_curva_roc.png
+    │   ├── i3d_final_r16a16d024_resultados.json
+    │   ├── resultados clip/                # Métricas y figuras de X-CLIP
+    │   ├── resultados swin/                # Métricas y figuras de Video Swin
+    │   └── resultados times/                # Métricas y figuras de TimeSformer
+    │
+    └── evaluacion/
+        ├── medir_operacional_i3d.py         # FPS, ms/clip, GFLOPs — I3D
+        ├── medir_operacional_ts.py          # FPS, ms/clip, GFLOPs — TimeSformer
+        ├── medir_operacional_xclip.py       # FPS, ms/clip, GFLOPs — X-CLIP
+        └── medir_operacional_swin.py        # FPS, ms/clip, GFLOPs — Video Swin
 ```
+
+> Los resultados de I3D (curva ROC y JSON de métricas) quedaron directamente
+> dentro de `entrenamientoF/`, mientras que los de TimeSformer, X-CLIP y
+> Video Swin están en sus respectivas subcarpetas `resultados times/`,
+> `resultados clip/` y `resultados swin/`.
 
 ---
 
@@ -92,14 +97,14 @@ fvcore>=0.1.5
 
 El experimento utiliza un subconjunto de **UCF-Crime** con 700 videos de 6 categorías (5 anómalas + Normal). El dataset original está disponible en:
 
-> Sultani, W., Chen, C., & Shah, M. (2018). Real-World Anomaly Detection in Surveillance Videos. CVPR.  
+> Sultani, W., Chen, C., & Shah, M. (2018). Real-World Anomaly Detection in Surveillance Videos. CVPR.
 > https://www.crcv.ucf.edu/projects/real-world/
 
 Una vez descargados los videos, generar el índice de clips:
 
 ```bash
-# El índice processed/index_clips.csv debe existir antes de entrenar
-# Generado por el pipeline de preprocesamiento descrito en la Sección 5.1 de la tesis
+python3 src/Preprocesamiento/preprocess.py
+# Genera processed/index_clips.csv, requerido antes de entrenar
 ```
 
 ---
@@ -113,27 +118,19 @@ Cada script es independiente y reanudable (usa checkpoints de fase):
 ```bash
 # I3D — incluye grid search del clasificador y calibración LoRA
 screen -S i3d
-python3 src/entrenamiento/train_i3d.py 2>&1 | tee i3d.log
+python3 "src/entrenamientoF/i3d_final_completo.py" 2>&1 | tee i3d.log
 
 # TimeSformer (~82-97 h por configuración LoRA)
 screen -S ts
-python3 src/entrenamiento/train_timesformer.py 2>&1 | tee ts.log
+python3 "src/entrenamientoF/timesformer_final_r16a16d024 (1).py" 2>&1 | tee ts.log
 
 # X-CLIP (~37-39 h por configuración LoRA)
 screen -S xclip
-python3 src/entrenamiento/train_xclip.py 2>&1 | tee xclip.log
+python3 "src/entrenamientoF/xclip_final_r16a16d024.py" 2>&1 | tee xclip.log
 
 # Video Swin Transformer
 screen -S swin
-python3 src/entrenamiento/train_videoswin.py 2>&1 | tee swin.log
-```
-
-Para retomar desde una fase específica sin re-ejecutar todo:
-
-```bash
-# Ejemplo: re-entrenar Solo LoRA de TimeSformer
-rm processed/ts_results/.phase_solo_lora_done
-python3 src/entrenamiento/train_timesformer.py
+python3 "src/entrenamientoF/swin_final_r16a16d024 (1).py" 2>&1 | tee swin.log
 ```
 
 ### 2. Métricas operacionales
@@ -149,13 +146,9 @@ python3 src/evaluacion/medir_operacional_swin.py
 
 Cada script actualiza el JSON de resultados correspondiente con una sección `"operational"` por configuración.
 
-### 3. Análisis comparativo
+### 3. Resultados
 
-Abrir el notebook para reproducir el análisis de Pareto, scoring compuesto y figuras de la tesis:
-
-```bash
-jupyter notebook notebooks/analisis_comparativo.ipynb
-```
+Las métricas de desempeño, curvas ROC, matrices de confusión y figuras comparativas (frontera de Pareto, gráfico de burbujas AUC–GFLOPs) quedan disponibles dentro de `src/entrenamientoF/` en las subcarpetas correspondientes a cada codificador.
 
 ---
 
@@ -166,9 +159,9 @@ Todos los scripts comparten la misma configuración de MLP y LoRA, calibrada sob
 | Hiperparámetro | Valor |
 |---|---|
 | Arquitectura MLP | FC (hidden=128, dropout=0.3) |
-| LoRA rank | 4 |
-| LoRA alpha | 8 |
-| LoRA dropout | 0.10 |
+| LoRA rank | 16 |
+| LoRA alpha | 16 |
+| LoRA dropout | 0.24 |
 | Optimizador | Adam |
 | LR Baseline/Solo LoRA | 1e-3 |
 | LR LoRA+MLP | 1e-4 |
@@ -181,15 +174,21 @@ Todos los scripts comparten la misma configuración de MLP y LoRA, calibrada sob
 
 ## Resultados principales
 
+Mejor configuración por codificador sobre el conjunto de prueba:
+
 | Codificador | Config | AUC | FAR | ms/clip | GFLOPs |
 |---|---|---|---|---|---|
-| I3D | LoRA+MLP | 0.871 | 0.155 | 43.1 | 55.8 |
-| TimeSformer | Solo LoRA | **0.941** | 0.135 | 160.7 | 196.5 |
-| X-CLIP | Solo LoRA | 0.919 | **0.112** | **42.2** | **35.9** |
-| Video Swin | En ejecución | — | — | — | 281.9 |
+| I3D | LoRA+MLP | 0.9149 | 0.1293 | 18.12 | 55.69 |
+| TimeSformer | **Solo LoRA** | **0.9413** | 0.1136 | 51.18 | 197.91 |
+| X-CLIP | LoRA+MLP | 0.9242 | 0.1874 | **18.42** | **36.11** |
+| Video Swin | LoRA+MLP | 0.9295 | 0.1465 | 148.26 | 289.89 |
 
-Umbral de tiempo real: ≤ 533 ms/clip (30 FPS, stride 16 frames).  
-Los tres codificadores completados operan dentro del umbral.
+Umbral de tiempo real: ≤ 533 ms/clip (30 FPS, stride 16 frames).
+**Los cuatro codificadores operan dentro del umbral**, con un factor de holgura mínimo de 3.6× (Video Swin).
+
+**Configuración seleccionada: TimeSformer + Solo LoRA**, por combinar el mayor AUC (0.9413) y la menor FAR (0.1136) del conjunto, con holgura de tiempo real de 10.4×.
+
+Se confirma además que LoRA supera al Baseline de codificador congelado en los cuatro codificadores evaluados, aunque la variante óptima (LoRA+MLP vs. Solo LoRA) depende de cada codificador: en I3D, X-CLIP y Video Swin es LoRA+MLP; TimeSformer es la única excepción, donde Solo LoRA resulta óptima porque su Baseline es el más fuerte del conjunto y su adaptación realinea las representaciones de forma favorable a la frontera de decisión heredada.
 
 ---
 
@@ -204,7 +203,7 @@ MIT License — libre para reutilizar, modificar y distribuir con atribución.
 Si utilizas este código en tu investigación, por favor cita:
 
 ```
-Valdés, D. (2025). Evaluación de codificadores de video para la 
-detección de anomalías en tiempo real. Tesis de Ingeniería Civil 
+Valdés, D. (2025). Evaluación de codificadores de video para la
+detección de anomalías en tiempo real. Tesis de Ingeniería Civil
 en Informática, Universidad de Santiago de Chile.
 ```
